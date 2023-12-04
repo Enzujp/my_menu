@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const bodyParser = require('body-parser');
 
 const app = express();
+const authRoutes = require("./routes/authRoutes");
 
 // set up view engine
 app.set('view engine', 'ejs')
@@ -41,3 +42,8 @@ app.get('/recipes', (req, res) => {
 app.get('/smoothies', (req, res) => {
     res.render('smoothies')
 })
+
+
+// request handling routes
+
+app.use(authRoutes)
