@@ -1,1 +1,8 @@
 I'm going to recreate a menu app where users can add their favorite recipes and access general recipes too.
+
+
+
+
+
+Use this to connect to a local database
+mongoose.connect('mongodb://127.0.0.1:27017/myapp');
