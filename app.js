@@ -46,4 +46,4 @@ app.get('/smoothies', (req, res) => {
 
 // request handling routes
 
-app.use(authRoutes)
+// app.use(authRoutes)
