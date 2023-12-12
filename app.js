@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const authRoutes = require("./routes/authRoutes");
 
+dotenv.config();
+
 // set up view engine
 app.set('view engine', 'ejs')
 
@@ -17,11 +19,12 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
 app.use(express.static('public'));
 
-
+// set connection port
+const PORT = process.env.PORT || 8000
 // connect to database and start up server
 const dbURI = "mongodb+srv://jp:7T6AfexDXXonDLSR@cluster0.tdpe0ff.mongodb.net/?retryWrites=true&w=majority"
 mongoose.connect(dbURI)
-.then((result) => app.listen(8000, console.log("Online, Connected to database!")))
+.then((result) => app.listen(PORT, console.log(`Online, Connected to database at port ${PORT}!`)))
 .catch((err)=> console.log(err))
 
 // start up server 
@@ -30,7 +33,7 @@ mongoose.connect(dbURI)
 // })
 
 
-// Routes
+// Request handling routes
 app.get('/', (req, res)=>{
     res.render('index')
 })
@@ -43,7 +46,4 @@ app.get('/smoothies', (req, res) => {
     res.render('smoothies')
 })
 
-
-// request handling routes
-
-// app.use(authRoutes)
+app.use(authRoutes)
