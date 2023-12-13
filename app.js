@@ -5,9 +5,12 @@ const morgan = require("morgan");
 const bodyParser = require('body-parser');
 
 const app = express();
-const authRoutes = require("./routes/authRoutes");
 
-dotenv.config();
+const authRoutes = require("./routes/authRoutes");
+const recipeRoutes = require("./routes/recipeRoutes");
+
+// Initialize dotenv for use
+require ("dotenv").config();
 
 // set up view engine
 app.set('view engine', 'ejs')
@@ -15,14 +18,16 @@ app.set('view engine', 'ejs')
 // middlewares
 app.use(cors());
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static('public'));
+
+
 
 // set connection port
 const PORT = process.env.PORT || 8000
 // connect to database and start up server
-const dbURI = "mongodb+srv://jp:7T6AfexDXXonDLSR@cluster0.tdpe0ff.mongodb.net/?retryWrites=true&w=majority"
+const dbURI = "mongodb+srv://jay:jessedavid@menu.08vbsfz.mongodb.net/"
 mongoose.connect(dbURI)
 .then((result) => app.listen(PORT, console.log(`Online, Connected to database at port ${PORT}!`)))
 .catch((err)=> console.log(err))
@@ -38,12 +43,9 @@ app.get('/', (req, res)=>{
     res.render('index')
 })
 
-app.get('/recipes', (req, res) => {
-    res.render('recipes')
-})
-
 app.get('/smoothies', (req, res) => {
     res.render('smoothies')
 })
 
-app.use(authRoutes)
+app.use(authRoutes);
+app.use(recipeRoutes);

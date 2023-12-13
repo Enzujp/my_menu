@@ -1,19 +1,17 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const userSchema =  new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     username: {
         type: String,
-        required: [true, 'Please enter your name'],
-        unique: true,
+        required: [true, 'Enter a Usernname'],
         lowercase: true,
-        minlength: [4, 'Please enter a name longer than 3 letters']
-    },
-
+        unique: true
+    }, 
     password: {
         type: String,
-        required: [true, 'Please enter your password'],
-        minlength: [6, 'Please enter a password longer than 5 characters'],
-        lowercase: true
+        minlength: [6, "Please enter a password longer than 5 characters"],
+        required: [true, 'Please enter a password.']
     }
 })
 
