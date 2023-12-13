@@ -31,6 +31,7 @@ module.exports.signup_post = async(req, res) => {
                     })
                 } else {
                     const user = new User({
+                        _id: new mongoose.Types.ObjectId(),
                         username: username,
                         password: encryptedPassword
                     })
