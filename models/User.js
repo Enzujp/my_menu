@@ -1,17 +1,19 @@
 const mongoose = require("mongoose");
 
-const userSchema =  new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     username: {
         type: String,
-        required: [true, 'Enter a Usernname'],
+        required: [true, "Please enter an Email"],
         lowercase: true,
         unique: true
-    }, 
+        
+        // install validator for email checks
+    },
     password: {
         type: String,
-        minlength: [6, "Please enter a password longer than 5 characters"],
-        required: [true, 'Please enter a password.']
+        required: true,
+        minlength: [6, 'Minimum Password length should be 6 Characters']
     }
 })
 
