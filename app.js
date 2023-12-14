@@ -23,6 +23,11 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static('public'));
 
 
+// routes to be used
+app.use(authRoutes);
+app.use(recipeRoutes);
+
+
 
 // set connection port
 const PORT = process.env.PORT || 8000
@@ -47,5 +52,3 @@ app.get('/smoothies', (req, res) => {
     res.render('smoothies')
 })
 
-app.use(authRoutes);
-app.use(recipeRoutes);
