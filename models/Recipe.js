@@ -5,9 +5,9 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: [true, 'please enter a recipe name']
     },
-    recipe: {
+    ingredients: {
         type: String,
-        required: [true, 'Please enter your recipe']
+        required: [true, 'Please enter the ingredients for your recipe']
     },
     recipeImage: {
         type: String, // uses url 
