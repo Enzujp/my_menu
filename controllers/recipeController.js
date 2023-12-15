@@ -61,8 +61,31 @@ module.exports.all_recipes_get = async (req, res) => {
     }
 }
 
-module.exports.add_recipe_post = (req, res) => {
+module.exports.add_recipe_post = async (req, res, next) => {
     // check to see if recipe already exists
+    const {name, ingredients} = req.body
+    try {
+        const recipe = new Recipe({
+            name: name,
+            ingredients: ingredients,
+            recipeImage: req.file.path
+        })
+        recipe.save();
+
+        res.status(200).json({
+            message: "Recipe has been successfully added",
+            newRecipe: {
+                name: recipe.name,
+                ingredients: recipe.ingredients,
+                image: recipe.recipeImage
+            }
+        })
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "Sorry, we can't upload this recipe at this time, please try in a little while"
+        })
+    }
 }
 
 module.exports.find_recipe_by_id_get = (req, res) => {
