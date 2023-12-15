@@ -1,19 +1,22 @@
 const mongoose = require("mongoose");
 const Recipe = require("../models/Recipe");
 
-module.exports.recipes_get = (req, res) => {
-    res.render('recipes')
+module.exports.all_recipes_get = (req, res) => {
+    // res.render('recipes') // this prints out available recipes from the prepopulated ejs file
+    // but what is required are the recipes created and stored in the database
+
+    Recipe.find() // returns all available recipes
+    
 }
 
-module.exports.recipes_post = (req, res) => {
-    const { name, recipe } = req.body
-    const newRecipe = new Recipe({
-        name: name,
-        recipe: recipe
-    })
-        newRecipe.save()
-    return res.status(201).json({
-        message: "Recipe created successfully",
-        recipe: newRecipe
-    })
+module.exports.add_recipe_post = (req, res) => {
+    // check to see if recipe already exists
+}
+
+module.exports.find_recipe_by_id_get = (req, res) => {
+    pass
+}
+
+module.exports.delete_recipe_by_id_get = (req, res) => {
+    pass
 }

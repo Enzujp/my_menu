@@ -8,9 +8,14 @@ const recipeSchema = new mongoose.Schema({
     recipe: {
         type: String,
         required: [true, 'Please enter your recipe']
+    },
+    recipeImage: {
+        type: String, // uses url 
+        required: true
+
     }
 
-})
+});
 
 
 module.exports = mongoose.model('Recipe', recipeSchema);
