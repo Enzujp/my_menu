@@ -55,7 +55,8 @@ module.exports.login_post = async (req, res) => {
         if (user) {
             const auth = bcrypt.compare(password, username.password)
             if (auth) {
-                const token = createToken({username: user.username})
+                // use generated mongoose id to create token
+                const token = createToken({username: user._id}) 
                 res.status(200).json({
                     message: "Logged in, Welcome.",
                     token: token
