@@ -1,29 +1,5 @@
 const mongoose = require("mongoose");
 const Recipe = require("../models/Recipe");
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + new Date().toISOString());
-    }
-})
-
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true)
-    } else {
-        cb(fileError({
-            message: "Only takes in jpeg and png formats"
-        }), false);
-    }
-}
-
-const upload = multer({storage: storage, fileFilter: fileFilter});
-
 
 module.exports.all_recipes_get = async (req, res) => {
     // res.render('recipes') // this prints out available recipes from the prepopulated ejs file
@@ -88,10 +64,49 @@ module.exports.add_recipe_post = async (req, res, next) => {
     }
 }
 
-module.exports.find_recipe_by_id_get = (req, res) => {
+// Get recipe by id
+module.exports.find_recipe_by_id_get = async (req, res) => {
+    const id = req.params.recipeId;
+    try {
+        const recipe = await Recipe.findById(id)
+        .select('name ingredients recipeImage')
+        .exec()
+        if (recipe) {
+            res.status(200).json({
+                name: recipe.name,
+                ingredients: recipe.ingredients,
+                image: recipe.recipeImage
+            })
+        } else {
+            res.status(404).json({
+                message: "Could not find results matching these paramaters"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "Could not fetch this particular recipe right now, please give it some time and try again."
+        })
+    }
+}
+
+module.exports.recipe_patch = (req, res) => {
     pass
 }
 
-module.exports.delete_recipe_by_id_get = (req, res) => {
-    pass
+module.exports.delete_recipe_by_id_get = async (req, res) => {
+    const id = req.params.recipeId;
+    try {
+        await Recipe.remove({id: id}).exec()
+        res.status(200).json({
+            message: "This recipe has been successfully deleted"
+        })
+        
+    } catch (error) {
+        res.status.json({
+            error: error,
+            message: "Could not carry out this action at this time, please try again in a while."
+        })
+    }
 }
+
