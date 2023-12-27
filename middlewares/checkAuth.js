@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 const User = require("../models/User");
 
-// check for token validity
+// confirm token validity
 
 const requireAuth = (res, req, next) => {
     const token = req.header('Authorization'); // accesses the jwt sent to the header
